@@ -39,7 +39,7 @@ function int mul(int a, int b);
   if (b < 0) begin
     b = -b;
     repeat (b) result = sum(result, a);
-    result = sub(0, result);
+    result = sub(0, result); //for minues value 
   end
   else begin
     repeat (b) result = sum(result, a);
@@ -49,9 +49,10 @@ function int mul(int a, int b);
 endfunction
 
 
-// Calculate Division
+//Calculte div
 function int div(int a, int b);
   static int quotient = 0;
+  static int reminder = 1;
 
   if (b == 0) begin
     $display("Error: Division by zero");
@@ -59,16 +60,14 @@ function int div(int a, int b);
     return div;
   end
 
-  if ((a < 0) ^ (b < 0)) begin
-    quotient = sub(0, quotient);
-  end
-
   if (a < 0) begin
-    a = sub(0, a);
+    reminder = -reminder;
+    a = -a;
   end
 
   if (b < 0) begin
-    b = sub(0, b);
+    reminder = -reminder;
+    b = -b;
   end
 
   while (a >= b) begin
@@ -76,8 +75,9 @@ function int div(int a, int b);
     quotient = sum(quotient, 1);
   end
 
-  div = quotient;
+  div = reminder * quotient;
 endfunction
+
 
 
 endmodule
